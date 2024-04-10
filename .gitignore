@@ -7,6 +7,7 @@
 /.yarn*
 /.pnp.*
 /packages/site/.cache
+/packages/site/public/
 
 # testing
 /coverage
