@@ -1,29 +1,17 @@
 {
   "version": "0.1.0",
-<<<<<<< HEAD
-  "description": "An example Snap written in TypeScript.",
-  "proposedName": "TypeScript Example",
-=======
   "description": "Get Farcaster trending mints notifications hourly on MetaMask.",
   "proposedName": "FarNotify",
->>>>>>> 8cfae92 (commit fix)
   "repository": {
     "type": "git",
     "url": "https://github.com/MetaMask/template-snap-monorepo.git"
   },
   "source": {
-<<<<<<< HEAD
-    "shasum": "TwVBeJ/PL4uARBEFZmgJukYd3XWyTbilkOPhtdg+GvU=",
-    "location": {
-      "npm": {
-        "filePath": "dist/bundle.js",
-=======
-    "shasum": "xFI8ZKxSwqUPV4CYobwQE0eHA9N7lSD5EV/quD2jhwE=",
+    "shasum": "R8MWvDXfgMrb1KeI+uFJJHwGbAc8jtZ9G9qpSE96gKY=",
     "location": {
       "npm": {
         "filePath": "dist/bundle.js",
         "iconPath": "images/icon.svg",
->>>>>>> 8cfae92 (commit fix)
         "packageName": "snap",
         "registry": "https://registry.npmjs.org/"
       }
@@ -31,13 +19,8 @@
   },
   "initialPermissions": {
     "snap_dialog": {},
-    "endowment:rpc": {
-      "dapps": true,
-      "snaps": false
-<<<<<<< HEAD
-    }
-=======
-    },
+    "endowment:page-home": {},
+    "endowment:lifecycle-hooks": {},
     "snap_notify": {},
     "endowment:cronjob": {
       "jobs": [
@@ -55,10 +38,7 @@
         }
       ]
     },
-    "endowment:network-access": {},
-    "snap_manageState": {},
-    "endowment:ethereum-provider": {}
->>>>>>> 8cfae92 (commit fix)
+    "endowment:network-access": {}
   },
   "manifestVersion": "0.1"
 }
