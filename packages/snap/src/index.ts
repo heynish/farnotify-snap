@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import type { OnRpcRequestHandler } from '@metamask/snaps-sdk';
 import { panel, text } from '@metamask/snaps-sdk';
 
@@ -34,3 +35,6 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
       throw new Error('Method not found.');
   }
 };
+=======
+export * from './handlers'
+>>>>>>> 8cfae92 (commit fix)

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { BASE_URL, CHAIN_ID } from "../config";
 import { fetchGet } from "../utils";
 
@@ -76,6 +77,29 @@ export const getFeeds = async (params: GetFeedsParams): Promise<IFeeds> => {
   } catch (error) {
     // Log and rethrow error if encountered
     console.error(`Error in getFeeds for ${params.userAddress}:`, error);
+=======
+import { fetchGet } from "../utils";
+
+export interface INotification {
+  address: string;
+  blockchain: string;
+  name: string;
+  supply: string;
+  url: string;
+}
+
+export interface IFeeds {
+  feeds: INotification[];
+}
+
+export const getFeeds = async (): Promise<IFeeds> => {
+  try {
+    const url = ''
+    const response = await fetchGet<IFeeds>(url);
+    return response;
+  } catch (error) {
+    console.error(`Error in getFeeds:`, error);
+>>>>>>> 8cfae92 (commit fix)
     throw error;
   }
 };

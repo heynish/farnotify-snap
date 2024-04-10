@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 export * from "./snapApi";
 export * from "./snapState";
 
@@ -23,3 +24,6 @@ export interface INotification {
 export interface INotificationGroup {
   [address: string]: INotification[];
 }
+=======
+export * from "./snapApi";
+>>>>>>> 8cfae92 (commit fix)

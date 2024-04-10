@@ -3,7 +3,14 @@
 # dependencies
 /node_modules
 /.pnp
+<<<<<<< HEAD
 .pnp.js
+=======
+/.pnp.js
+/.yarn*
+/.pnp.*
+/packages/site/.cache
+>>>>>>> 8cfae92 (commit fix)
 
 # testing
 /coverage

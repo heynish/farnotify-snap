@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { LatestSnapState } from "./snapState";
 
 export type ApiRequestParams =
@@ -38,4 +39,8 @@ export enum SnapRpcMethod {
 export enum SnapCronJobMethod {
   NotifyCronJob = "notifyCronJob", 
   GarbageCollectCronJob = "garbageCollectCronJob",
+=======
+export enum SnapCronJobMethod {
+  NotifyCronJob = "notifyCronJob", 
+>>>>>>> 8cfae92 (commit fix)
 }

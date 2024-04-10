@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { copyable, divider, heading, panel, text } from "@metamask/snaps-sdk";
 import {
   fetchAllNotifs,
@@ -23,6 +24,19 @@ export const notifyCronJob = async (state: LatestSnapState): Promise<void> => {
     if (allNotifs.length > 0) {
 
         // show popup
+=======
+import { divider, heading, panel } from "@metamask/snaps-sdk";
+import {
+  fetchAllNotifs,
+  notifyInMetamaskApp,
+} from "../../utils";
+
+export const notifyCronJob = async (): Promise<void> => {
+  try {
+    const allNotifs = await fetchAllNotifs();
+
+    if (allNotifs.length > 0) {
+>>>>>>> 8cfae92 (commit fix)
         await snap.request({
           method: "snap_dialog",
           params: {
@@ -33,6 +47,7 @@ export const notifyCronJob = async (state: LatestSnapState): Promise<void> => {
             ]),
           },
         });
+<<<<<<< HEAD
 
         const newState = {
           ...state,
@@ -58,6 +73,12 @@ export const notifyCronJob = async (state: LatestSnapState): Promise<void> => {
     // Handle or log the error as needed
     console.error("Error in notifCronJob:", error);
     // Optionally rethrow the error if you want it to propagate further
+=======
+    }
+    await notifyInMetamaskApp(allNotifs);
+  } catch (error) {
+    console.error("Error in notifCronJob:", error);
+>>>>>>> 8cfae92 (commit fix)
     throw error;
   }
 };

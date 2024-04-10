@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { Feed, getFeeds } from "../services";
 import { getModifiedSnapState, updateSnapState } from "./snapStateUtils";
 import { convertEpochToMilliseconds, formatTimestamp } from "./time";
@@ -22,10 +23,22 @@ export const getNotifications = async ({
       return feeds.feeds;
   } catch (err) {
     console.error(`Error in getNotifications for ${userAddress}:`, err);
+=======
+import { getFeeds } from "../services";
+import { INotification } from "../services";
+
+export const getNotifications = async () => {
+  try {
+      const feeds = await getFeeds();
+      return feeds.feeds;
+  } catch (err) {
+    console.error(`Error in getNotifications:`, err);
+>>>>>>> 8cfae92 (commit fix)
     throw err;
   }
 };
 
+<<<<<<< HEAD
 /**
  * Fetches notifications for all stored addresses.
  * @returns An array of notifications for all stored addresses.
@@ -43,6 +56,18 @@ export const fetchAllNotifs = async (): Promise<INotification[]> => {
     const results = await Promise.all(promises);
     notifs = results.reduce((acc, curr) => acc.concat(curr), []);
 
+=======
+
+export const fetchAllNotifs = async (): Promise<INotification[]> => {
+  try {
+    let notifs: INotification[] = [];
+      const fetchedNotifications = await getNotifications();
+      if (fetchedNotifications.length === 0) {
+        return [];
+      }
+    const promises = fetchedNotifications;
+    notifs = await Promise.all(promises);
+>>>>>>> 8cfae92 (commit fix)
     return notifs;
   } catch (error) {
     console.error("Error in fetchAllAddrNotifs:", error);
@@ -50,6 +75,7 @@ export const fetchAllNotifs = async (): Promise<INotification[]> => {
   }
 };
 
+<<<<<<< HEAD
 /**
  * Formats the notifs from Feed format into INotification format to be used in snap
  * @param address - The Ethereum address.
@@ -174,6 +200,15 @@ export const notifyInMetamaskApp = async (notifs: INotification[]) => {
     // Add notifications from notifs array
     for (let i = 0; i < remainingToAdd && i < notifs.length; i++) {
       const msg = notifs[i].msgData.inAppNotifMsg;
+=======
+
+export const notifyInMetamaskApp = async (notifs: INotification[]) => {
+  try {
+
+    if(notifs && notifs.length>0){
+    for (let i = 0; i < notifs.length; i++) {
+      const msg = notifs[i]?.address || '';
+>>>>>>> 8cfae92 (commit fix)
       await snap.request({
         method: "snap_notify",
         params: {
@@ -181,6 +216,7 @@ export const notifyInMetamaskApp = async (notifs: INotification[]) => {
           message: msg,
         },
       });
+<<<<<<< HEAD
       await sleep(3000);
     }
 
@@ -202,6 +238,10 @@ export const notifyInMetamaskApp = async (notifs: INotification[]) => {
       newState: state,
       encrypted: false,
     });
+=======
+    }
+  }
+>>>>>>> 8cfae92 (commit fix)
   } catch (error) {
     console.error("Error in notifyInMetamaskApp:", error);
     throw error;
