@@ -1,10 +1,7 @@
 import { Feed, getFeeds } from "../services";
-import { fetchAddress } from "./address";
-import { ethers } from "ethers";
 import { getModifiedSnapState, updateSnapState } from "./snapStateUtils";
 import { convertEpochToMilliseconds, formatTimestamp } from "./time";
 import { INotification, INotificationGroup } from "../types";
-import { sleep } from "./helperFn";
 
 /**
  * Retrieves notifications for a specific address.
@@ -21,18 +18,8 @@ export const getNotifications = async ({
   limit?: number;
 }) => {
   try {
-    const addressValidation = ethers.utils.isAddress(userAddress);
-
-    if (addressValidation) {
-      // Retrieve feeds using the service function
       const feeds = await getFeeds({ userAddress, page, limit });
       return feeds.feeds;
-    } else {
-      console.warn(`Invalid Ethereum address: ${userAddress}`);
-      throw Error(
-        `Error in getNotifications for ${userAddress}: Invalid Ethereum address`
-      );
-    }
   } catch (err) {
     console.error(`Error in getNotifications for ${userAddress}:`, err);
     throw err;
@@ -40,111 +27,10 @@ export const getNotifications = async ({
 };
 
 /**
- * Groups notifications by their address.
- *
- * @param {INotification[]} notifs - The array of notifications to be grouped.
- * @returns {Promise<INotificationGroup>} - A promise that resolves to an object where each key is an address
- *                                          with its corresponding array of notifications.
- */
-export const groupNotifications = async (
-  notifs: INotification[]
-): Promise<INotificationGroup> => {
-  const grouped: INotificationGroup = notifs.reduce((acc, notif) => {
-    const address = notif.address;
-    // If the accumulator doesn't have an array for this address, create one
-    if (!acc[address]) {
-      acc[address] = [];
-    }
-    // Push the current notification onto the array for this address
-    acc[address].push(notif);
-    return acc;
-  }, {});
-  return grouped;
-};
-
-/**
- * Filters notifications for a given address based on the last processed epoch timestamp.
- * @param address - The Ethereum address.
- * @returns A Promise that resolves to an array of filtered notification messages.
- */
-export const filterNotifications = async (
-  address: string
-): Promise<INotification[]> => {
-  try {
-    // Retrieve the current state including last processed epoch timestamp
-    const state = await getModifiedSnapState({ encrypted: false });
-    const processedLastEpoch =
-      state.addresses[address].lastFeedsProcessedTimestamp;
-
-    // Initialize an array to store formatted notifications
-    const formattedFeeds: INotification[] = [];
-
-    // Initialize variables for pagination
-    let nextPage = 1; // Initial page number
-    let fetchComplete = false;
-
-    // Continue fetching notifications until no more notifications to process
-    // Ideal cases
-    // Case1: if getNotifications returns empty array, while loop should break
-    // Case2: if feed's epoch is more then processed epoch for only few notifs, then don't fetch next page and break
-    // Case3: if feed's epoch is more then processed epoch for all notifs, then fetch next page and run same process again
-    // Case4: if feed's epoch is more then processed epoch for no notifs, then while loop should break
-    while (!fetchComplete) {
-      // Fetch notifications for the current page
-      const fetchedNotifications = await getNotifications({
-        userAddress: address,
-        page: nextPage,
-      });
-
-      // If no notifications are returned, stop fetching more pages
-      if (fetchedNotifications.length === 0) {
-        fetchComplete = true;
-        break;
-      }
-
-      // Flag to track if all notifications pass the condition in the current page
-      let allNotificationsPassed = true;
-
-      // Process fetched notifications
-      for (let i = 0; i < fetchedNotifications.length; i++) {
-        const feedEpoch = convertEpochToMilliseconds(
-          fetchedNotifications[i].payload.data.epoch
-        );
-
-        // Check if the notification passes the condition
-        if (feedEpoch > processedLastEpoch) {
-          // Add filtered notifications to the formatted list
-          formattedFeeds.push(
-            ...getFormattedNotifList([fetchedNotifications[i]], address)
-          );
-        } else {
-          // If any notification fails the condition, set the flag to false
-          allNotificationsPassed = false;
-          break; // No need to process further notifications on this page
-        }
-      }
-
-      // Check if all notifications passed the condition in the current page
-      if (!allNotificationsPassed) {
-        fetchComplete = true; // Stop fetching more pages
-      } else {
-        nextPage++; // Move to the next page for pagination
-      }
-    }
-
-    // Reverse the formatted list to maintain chronological order
-    return formattedFeeds.reverse();
-  } catch (error) {
-    console.error(`Error in filterNotifications for ${address}:`, error);
-    throw error;
-  }
-};
-
-/**
  * Fetches notifications for all stored addresses.
  * @returns An array of notifications for all stored addresses.
  */
-export const fetchAllAddrNotifs = async (): Promise<INotification[]> => {
+export const fetchAllNotifs = async (): Promise<INotification[]> => {
   try {
     const addresses = await fetchAddress();
     let notifs: INotification[] = [];
