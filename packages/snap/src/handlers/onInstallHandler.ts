@@ -7,9 +7,15 @@ export const onInstall: OnInstallHandler = async () => {
         params: {
             type: "alert",
             content: panel([
-                heading("Thank you for installing my Snap"),
+                heading("Thank you for installing FarNotify"),
                 text(
-                    "To use this Snap, visit the companion dapp at [metamask.io](https://metamask.io).",
+                    "You'll get hourly notifications on trending mints among Farcaster users.",
+                ),
+                text(
+                    "Also you can view hourly trending casts on Farcaster. To view,",
+                ),
+                text(
+                    "Open MetaMask->Snaps->FarNotify",
                 ),
             ]),
         },

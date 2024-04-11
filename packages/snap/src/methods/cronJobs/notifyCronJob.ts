@@ -1,4 +1,4 @@
-import { divider, heading, panel } from "@metamask/snaps-sdk";
+import { divider, heading, panel, text } from "@metamask/snaps-sdk";
 import {
   fetchAllNotifs,
   notifyInMetamaskApp,
@@ -9,18 +9,27 @@ export const notifyCronJob = async (): Promise<void> => {
     const allNotifs = await fetchAllNotifs();
 
     if (allNotifs.length > 0) {
+
+      const feed = allNotifs.map((notifs: any) => [
+        divider(),
+        text(`**${notifs.name}**`),
+        text(`_Blockchain_ ${notifs.blockchain}`),
+        text(`_View on Element_ [ ](${notifs.url})`),
+      ]);
+
         await snap.request({
           method: "snap_dialog",
           params: {
             type: "alert",
             content: panel([
-              heading("You have a new notification!"),
+              heading("Trending mints from the last hour"),
+              ...feed.flat(),
               divider(),
-            ]),
+            ])
           },
         });
     }
-    await notifyInMetamaskApp(allNotifs);
+    //await notifyInMetamaskApp(allNotifs);
   } catch (error) {
     console.error("Error in notifCronJob:", error);
     throw error;

@@ -1,11 +1,14 @@
 export const fetchGet = async <T>(url: string): Promise<T> => {
   try {
-    const response = await fetch(url, {
+    /* const response = await fetch(url, {
       method: "get",
       headers: {
         "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
       },
-    });
+    }); */
+
+    const response = await fetch(url);
 
     if (!response.ok) {
       throw new Error(`Failed to fetch data from ${url}`);
@@ -24,6 +27,7 @@ export const fetchPost = async <T>(url: string, body: T): Promise<T> => {
       method: "post",
       headers: {
         "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
       },
       body: JSON.stringify(body),
     });
