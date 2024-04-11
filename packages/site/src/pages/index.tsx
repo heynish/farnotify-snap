@@ -109,7 +109,7 @@ const Index = () => {
   const isMetaMaskReady = isLocalSnap(defaultSnapOrigin)
     ? isFlask
     : snapsDetected;
-
+    console.log("isMetaMaskReady", isMetaMaskReady);
   const handleSendHelloClick = async () => {
     await invokeSnap({ method: 'hello' });
   };

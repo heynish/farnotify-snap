@@ -1,18 +1,18 @@
 {
-  "version": "0.1.0",
-  "description": "Get Farcaster trending mints notifications hourly on MetaMask.",
+  "version": "1.0.1",
+  "description": "Get hourly farcaster trending mints and casts on MetaMask.",
   "proposedName": "FarNotify",
   "repository": {
     "type": "git",
-    "url": "https://github.com/heynish/farnotify.git"
+    "url": "https://github.com/heynish/farnotify-snap"
   },
   "source": {
-    "shasum": "/Yf6UIAYaO9fGDIvYKiCQ0MJzVmEB8s4RsC2WwXRikw=",
+    "shasum": "1XSgZD1rgAo0jIK8qQf6e1ptg6xJTz9eT1Qfn6imVZ4=",
     "location": {
       "npm": {
         "filePath": "dist/bundle.js",
         "iconPath": "images/icon.svg",
-        "packageName": "snap",
+        "packageName": "farnotify-snap",
         "registry": "https://registry.npmjs.org/"
       }
     }
@@ -25,7 +25,7 @@
     "endowment:cronjob": {
       "jobs": [
         {
-          "expression": "* * * * *",
+          "expression": "0 * * * *",
           "request": {
             "method": "notifyCronJob"
           }
