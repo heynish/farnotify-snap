@@ -7,7 +7,7 @@
     "url": "https://github.com/heynish/farnotify-snap"
   },
   "source": {
-    "shasum": "1XSgZD1rgAo0jIK8qQf6e1ptg6xJTz9eT1Qfn6imVZ4=",
+    "shasum": "jZ+M5/7H5J9+MEBJj1Fgzhj+t/AZmRPsGx1AuORLFQ4=",
     "location": {
       "npm": {
         "filePath": "dist/bundle.js",
@@ -25,7 +25,7 @@
     "endowment:cronjob": {
       "jobs": [
         {
-          "expression": "0 * * * *",
+          "expression": "* * * * *",
           "request": {
             "method": "notifyCronJob"
           }
